@@ -1,0 +1,23 @@
+type Task {
+    id: ID!
+    title: String!
+    status: String!
+}
+
+type Query {
+    tasks: [Task!]! @all
+}
+
+type Mutation {
+    # Create a new task
+    createTask(title: String!, status: String!): [Task!]! @field(resolver: "App\\Http\\GraphQL\\Mutations\\TaskMutations@createTask")
+
+    # Update an existing task
+    updateTask(id: ID!, title: String, status: String): [Task!]! @field(resolver: "App\\Http\\GraphQL\\Mutations\\TaskMutations@updateTask")
+
+    # Delete a task by ID
+    deleteTask(id: ID!): [Task!]! @field(resolver: "App\\Http\\GraphQL\\Mutations\\TaskMutations@deleteTask")
+
+    # Delete all tasks with status 'done'
+    deleteDoneTasks: [Task!]! @field(resolver: "App\\Http\\GraphQL\\Mutations\\TaskMutations@deleteDoneTasks")
+}
